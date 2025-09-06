@@ -174,16 +174,16 @@ export default function Products() {
                   </SelectContent>
                 </Select>
                 <Select
-                  value={form.supplierId || ""}
+                  value={form.supplierId ?? "__none"}
                   onValueChange={(v) =>
-                    setForm({ ...form, supplierId: v || undefined })
+                    setForm({ ...form, supplierId: v === "__none" ? undefined : v })
                   }
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Supplier" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">None</SelectItem>
+                    <SelectItem value="__none">None</SelectItem>
                     {suppliers.map((s) => (
                       <SelectItem key={s.id} value={s.id}>
                         {s.name}
