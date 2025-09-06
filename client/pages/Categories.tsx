@@ -74,10 +74,10 @@ export default function Categories() {
                     <Input defaultValue={c.name} onBlur={(e) => addOrUpdateCategory({ id: c.id, name: e.target.value })} />
                   </TableCell>
                   <TableCell>
-                    <Select value={c.parentId || ""} onValueChange={(v)=>addOrUpdateCategory({ id:c.id, parentId: v || null })}>
+                    <Select value={c.parentId ?? "__none"} onValueChange={(v)=>addOrUpdateCategory({ id:c.id, parentId: v === "__none" ? null : v })}>
                       <SelectTrigger className="w-48"><SelectValue placeholder="Parent" /></SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">None</SelectItem>
+                        <SelectItem value="__none">None</SelectItem>
                         {categories.filter(x=>x.id!==c.id).map(x=> <SelectItem key={x.id} value={x.id}>{x.name}</SelectItem>)}
                       </SelectContent>
                     </Select>
