@@ -29,4 +29,14 @@ export function canAccess(route: RouteKey, role: Role) {
   return ACCESS[route].includes(role);
 }
 
+// Action-level permissions
+export const can = {
+  manageUsers: (role: Role) => ["owner", "manager"].includes(role),
+  manageCatalog: (role: Role) => ["owner", "manager"].includes(role),
+  editProductPrices: (role: Role) => ["owner", "manager"].includes(role),
+  deleteProducts: (role: Role) => ["owner", "manager"].includes(role),
+  createPurchases: (role: Role) => ["owner", "manager"].includes(role),
+  giveDiscounts: (role: Role) => ["owner", "manager"].includes(role),
+};
+
 export const ACCESS_MATRIX = ACCESS;
