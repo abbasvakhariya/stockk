@@ -32,6 +32,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import Code39 from "@/components/barcode/Code39";
+import { useAuth } from "@/context/auth";
+import { can } from "@/lib/permissions";
 
 export default function Products() {
   const {
