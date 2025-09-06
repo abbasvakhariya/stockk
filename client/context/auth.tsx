@@ -7,6 +7,7 @@ type AuthContextType = {
   user: User | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<boolean>;
+  register: (name: string, email: string, password: string, role?: Role) => Promise<boolean>;
   loginAs: (role: Role) => void;
   logout: () => void;
   users: UserWithPassword[];
