@@ -22,12 +22,12 @@ import {
 export default function Categories() {
   const { categories, addOrUpdateCategory, removeCategory } = useData();
   const [name, setName] = useState("");
-  const [parent, setParent] = useState<string>("");
+  const [parent, setParent] = useState<string>("__none");
 
   const add = () => {
     if (!name.trim()) return;
-    addOrUpdateCategory({ name: name.trim(), parentId: parent || undefined });
-    setName(""); setParent("");
+    addOrUpdateCategory({ name: name.trim(), parentId: parent === "__none" ? undefined : parent });
+    setName(""); setParent("__none");
   };
 
   return (
