@@ -15,12 +15,41 @@ export type Product = {
   supplierId?: ID | null;
 };
 export type Category = { id: ID; name: string; parentId?: ID | null };
-export type Supplier = { id: ID; name: string; phone?: string; email?: string; address?: string };
+export type Supplier = {
+  id: ID;
+  name: string;
+  phone?: string;
+  email?: string;
+  address?: string;
+};
 export type PurchaseItem = { productId: ID; qty: number; cost: number };
-export type Purchase = { id: ID; date: string; supplierId?: ID | null; items: PurchaseItem[] };
-export type SaleItem = { productId: ID; qty: number; price: number; discount?: number };
-export type Sale = { id: ID; date: string; items: SaleItem[]; discount?: number; taxRate?: number; customer?: string };
-export type Adjustment = { id: ID; date: string; productId: ID; qtyChange: number; reason?: string };
+export type Purchase = {
+  id: ID;
+  date: string;
+  supplierId?: ID | null;
+  items: PurchaseItem[];
+};
+export type SaleItem = {
+  productId: ID;
+  qty: number;
+  price: number;
+  discount?: number;
+};
+export type Sale = {
+  id: ID;
+  date: string;
+  items: SaleItem[];
+  discount?: number;
+  taxRate?: number;
+  customer?: string;
+};
+export type Adjustment = {
+  id: ID;
+  date: string;
+  productId: ID;
+  qtyChange: number;
+  reason?: string;
+};
 
 export type Settings = { currency: string; defaultTaxRate: number };
 
@@ -38,10 +67,54 @@ const LS_KEY = "sf_data_v1";
 
 const initialState: DataState = {
   products: [
-    { id: "p1", name: "Apple Juice 1L", sku: "SKU-001", categoryId: undefined, unit: "ltr", costPrice: 1.2, sellPrice: 2.5, stock: 12, minStock: 10, supplierId: undefined },
-    { id: "p2", name: "Rice 5kg", sku: "SKU-014", categoryId: undefined, unit: "kg", costPrice: 4.5, sellPrice: 7.0, stock: 6, minStock: 8, supplierId: undefined },
-    { id: "p3", name: "Soap Bar", sku: "SKU-023", categoryId: undefined, unit: "pcs", costPrice: 0.3, sellPrice: 0.8, stock: 4, minStock: 12, supplierId: undefined },
-    { id: "p4", name: "Milk 500ml", sku: "SKU-034", categoryId: undefined, unit: "ltr", costPrice: 0.4, sellPrice: 1.0, stock: 5, minStock: 10, supplierId: undefined },
+    {
+      id: "p1",
+      name: "Apple Juice 1L",
+      sku: "SKU-001",
+      categoryId: undefined,
+      unit: "ltr",
+      costPrice: 1.2,
+      sellPrice: 2.5,
+      stock: 12,
+      minStock: 10,
+      supplierId: undefined,
+    },
+    {
+      id: "p2",
+      name: "Rice 5kg",
+      sku: "SKU-014",
+      categoryId: undefined,
+      unit: "kg",
+      costPrice: 4.5,
+      sellPrice: 7.0,
+      stock: 6,
+      minStock: 8,
+      supplierId: undefined,
+    },
+    {
+      id: "p3",
+      name: "Soap Bar",
+      sku: "SKU-023",
+      categoryId: undefined,
+      unit: "pcs",
+      costPrice: 0.3,
+      sellPrice: 0.8,
+      stock: 4,
+      minStock: 12,
+      supplierId: undefined,
+    },
+    {
+      id: "p4",
+      name: "Milk 500ml",
+      sku: "SKU-034",
+      categoryId: undefined,
+      unit: "ltr",
+      costPrice: 0.4,
+      sellPrice: 1.0,
+      stock: 5,
+      minStock: 10,
+      supplierId: undefined,
+    },
   ],
   categories: [
     { id: "c1", name: "Beverages" },
@@ -97,7 +170,12 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const addOrUpdateProduct: DataContextType["addOrUpdateProduct"] = (p) => {
     setState((s) => {
       if (p.id) {
-        return { ...s, products: s.products.map((x) => (x.id === p.id ? { ...x, ...p } as Product : x)) };
+        return {
+          ...s,
+          products: s.products.map((x) =>
+            x.id === p.id ? ({ ...x, ...p } as Product) : x,
+          ),
+        };
       }
       const created: Product = {
         id: crypto.randomUUID(),
@@ -113,30 +191,68 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  const removeProduct = (id: ID) => setState((s) => ({ ...s, products: s.products.filter((p) => p.id !== id) }));
+  const removeProduct = (id: ID) =>
+    setState((s) => ({
+      ...s,
+      products: s.products.filter((p) => p.id !== id),
+    }));
 
   const addOrUpdateCategory = (c: Partial<Category> & { id?: ID }) =>
     setState((s) => {
-      if (c.id) return { ...s, categories: s.categories.map((x) => (x.id === c.id ? { ...x, ...c } as Category : x)) };
-      return { ...s, categories: [{ id: crypto.randomUUID(), name: "", ...c } as Category, ...s.categories] };
+      if (c.id)
+        return {
+          ...s,
+          categories: s.categories.map((x) =>
+            x.id === c.id ? ({ ...x, ...c } as Category) : x,
+          ),
+        };
+      return {
+        ...s,
+        categories: [
+          { id: crypto.randomUUID(), name: "", ...c } as Category,
+          ...s.categories,
+        ],
+      };
     });
 
-  const removeCategory = (id: ID) => setState((s) => ({ ...s, categories: s.categories.filter((c) => c.id !== id) }));
+  const removeCategory = (id: ID) =>
+    setState((s) => ({
+      ...s,
+      categories: s.categories.filter((c) => c.id !== id),
+    }));
 
   const addOrUpdateSupplier = (v: Partial<Supplier> & { id?: ID }) =>
     setState((s) => {
-      if (v.id) return { ...s, suppliers: s.suppliers.map((x) => (x.id === v.id ? { ...x, ...v } as Supplier : x)) };
-      return { ...s, suppliers: [{ id: crypto.randomUUID(), name: "", ...v } as Supplier, ...s.suppliers] };
+      if (v.id)
+        return {
+          ...s,
+          suppliers: s.suppliers.map((x) =>
+            x.id === v.id ? ({ ...x, ...v } as Supplier) : x,
+          ),
+        };
+      return {
+        ...s,
+        suppliers: [
+          { id: crypto.randomUUID(), name: "", ...v } as Supplier,
+          ...s.suppliers,
+        ],
+      };
     });
 
-  const removeSupplier = (id: ID) => setState((s) => ({ ...s, suppliers: s.suppliers.filter((c) => c.id !== id) }));
+  const removeSupplier = (id: ID) =>
+    setState((s) => ({
+      ...s,
+      suppliers: s.suppliers.filter((c) => c.id !== id),
+    }));
 
   const recordPurchase = (po: Omit<Purchase, "id">) => {
     const id = crypto.randomUUID();
     setState((s) => {
       const products = s.products.map((p) => {
         const add = po.items.find((i) => i.productId === p.id);
-        return add ? { ...p, stock: p.stock + add.qty, costPrice: add.cost } : p;
+        return add
+          ? { ...p, stock: p.stock + add.qty, costPrice: add.cost }
+          : p;
       });
       return { ...s, products, purchases: [{ id, ...po }, ...s.purchases] };
     });
@@ -164,13 +280,16 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     const id = crypto.randomUUID();
     setState((s) => ({
       ...s,
-      products: s.products.map((p) => (p.id === a.productId ? { ...p, stock: p.stock + a.qtyChange } : p)),
+      products: s.products.map((p) =>
+        p.id === a.productId ? { ...p, stock: p.stock + a.qtyChange } : p,
+      ),
       adjustments: [{ id, ...a }, ...s.adjustments],
     }));
     return id;
   };
 
-  const setSettings = (s2: Partial<Settings>) => setState((s) => ({ ...s, settings: { ...s.settings, ...s2 } }));
+  const setSettings = (s2: Partial<Settings>) =>
+    setState((s) => ({ ...s, settings: { ...s.settings, ...s2 } }));
 
   const exportJson = () => JSON.stringify(state, null, 2);
   const importJson = (json: string) => {
@@ -181,7 +300,21 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   };
 
   const value: DataContextType = useMemo(
-    () => ({ ...state, addOrUpdateProduct, removeProduct, addOrUpdateCategory, removeCategory, addOrUpdateSupplier, removeSupplier, recordPurchase, recordSale, adjustStock, setSettings, exportJson, importJson }),
+    () => ({
+      ...state,
+      addOrUpdateProduct,
+      removeProduct,
+      addOrUpdateCategory,
+      removeCategory,
+      addOrUpdateSupplier,
+      removeSupplier,
+      recordPurchase,
+      recordSale,
+      adjustStock,
+      setSettings,
+      exportJson,
+      importJson,
+    }),
     [state],
   );
 
