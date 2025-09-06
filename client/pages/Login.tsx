@@ -12,7 +12,9 @@ import { Button } from "@/components/ui/button";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
 export default function Login() {
-  const { login, loginAs } = useAuth();
+  const { login, register, loginAs } = useAuth();
+  const [mode, setMode] = useState<'login'|'signup'>('login');
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -22,8 +24,10 @@ export default function Login() {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const ok = await login(email.trim(), password);
-    if (!ok) return setError("Invalid credentials");
+    let ok = false;
+    if (mode==='login') ok = await login(email.trim(), password);
+    else ok = await register(name.trim(), email.trim(), password, 'staff');
+    if (!ok) return setError(mode==='login'?"Invalid credentials":"Email already exists");
     navigate(from, { replace: true });
   };
 
