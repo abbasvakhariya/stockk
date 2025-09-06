@@ -32,6 +32,8 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/context/auth";
 import { canAccess, type RouteKey } from "@/lib/permissions";
+import { NAV_CONFIG } from "@/config/nav";
+import { useData } from "@/context/data";
 import {
   BarChart3,
   Boxes,

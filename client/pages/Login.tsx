@@ -28,7 +28,10 @@ export default function Login() {
     if (mode==='login') ok = await login(email.trim(), password);
     else ok = await register(name.trim(), email.trim(), password, 'staff');
     if (!ok) return setError(mode==='login'?"Invalid credentials":"Email already exists");
-    navigate(from, { replace: true });
+    const sess = JSON.parse(localStorage.getItem('sf_session')||'{}');
+    const role = sess.role || 'staff';
+    const next = role==='owner'?'/owner/dashboard': role==='manager'?'/manager/dashboard':'/staff/dashboard';
+    navigate(next, { replace: true });
   };
 
   return (

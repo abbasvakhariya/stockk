@@ -21,6 +21,11 @@ import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import { AuthProvider } from "./context/auth";
 import Protected from "./components/auth/Protected";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import OwnerDashboard from "./pages/owner/Dashboard";
+import ManagerDashboard from "./pages/manager/Dashboard";
+import StaffDashboard from "./pages/staff/Dashboard";
+import MyBills from "./pages/MyBills";
 import { DataProvider } from "./context/data";
 
 const queryClient = new QueryClient();
