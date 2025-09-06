@@ -150,19 +150,17 @@ export default function Purchases() {
                       }
                     />
                   </TableCell>
+                  <TableCell>
+                    <Input value={it.batch || ''} onChange={(e)=>update(idx,{ batch: e.target.value })} placeholder="Batch #" />
+                  </TableCell>
+                  <TableCell>
+                    <Input type="date" value={it.expiry || ''} onChange={(e)=>update(idx,{ expiry: e.target.value })} />
+                  </TableCell>
                   <TableCell className="text-right">
                     {(it.qty * it.cost).toFixed(2)}
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() =>
-                        setItems(items.filter((_, i) => i !== idx))
-                      }
-                    >
-                      Remove
-                    </Button>
+                    <Button variant="destructive" size="sm" onClick={() => setItems(items.filter((_, i) => i !== idx))}>Remove</Button>
                   </TableCell>
                 </TableRow>
               ))}
