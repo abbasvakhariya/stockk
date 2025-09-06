@@ -219,6 +219,7 @@ export default function Products() {
                 <TableHead className="text-right">Price</TableHead>
                 <TableHead className="text-right">Stock</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
+                <TableHead className="text-right">Barcode</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
