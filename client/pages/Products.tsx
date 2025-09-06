@@ -156,16 +156,16 @@ export default function Products() {
                   }
                 />
                 <Select
-                  value={form.categoryId || ""}
+                  value={form.categoryId ?? "__none"}
                   onValueChange={(v) =>
-                    setForm({ ...form, categoryId: v || undefined })
+                    setForm({ ...form, categoryId: v === "__none" ? undefined : v })
                   }
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Category" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">None</SelectItem>
+                    <SelectItem value="__none">None</SelectItem>
                     {categories.map((c) => (
                       <SelectItem key={c.id} value={c.id}>
                         {c.name}
