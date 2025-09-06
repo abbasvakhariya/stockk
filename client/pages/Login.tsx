@@ -35,21 +35,20 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-background">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Sign in</CardTitle>
+          <CardTitle>{mode==='login'?'Sign in':'Create account'}</CardTitle>
           <CardDescription>
-            Frontend-only demo auth. Use sample accounts or email/password.
+            Frontend-only demo auth. {mode==='login'?'Use sample accounts or email/password.':'New users default to Staff role.'}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={onSubmit} className="space-y-3">
+            {mode==='signup' && (
+              <div>
+                <Input placeholder="Full name" value={name} onChange={(e)=>setName(e.target.value)} required />
+              </div>
+            )}
             <div>
-              <Input
-                placeholder="Email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+              <Input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
             <div>
               <Input
@@ -62,9 +61,14 @@ export default function Login() {
             </div>
             {error && <div className="text-sm text-red-500">{error}</div>}
             <Button type="submit" className="w-full">
-              Login
+              {mode==='login'?'Login':'Sign up'}
             </Button>
           </form>
+          <div className="flex justify-between mt-2 text-xs">
+            <button className="underline text-muted-foreground" onClick={()=>{ setMode(mode==='login'?'signup':'login'); setError(null); }}>
+              {mode==='login'?"Create account":"Have an account? Sign in"}
+            </button>
+          </div>
           <div className="mt-4 grid grid-cols-3 gap-2 text-xs">
             <Button variant="outline" onClick={() => loginAs("owner")}>
               Login as Owner
