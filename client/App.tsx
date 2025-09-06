@@ -21,6 +21,7 @@ import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import { AuthProvider } from "./context/auth";
 import Protected from "./components/auth/Protected";
+import { DataProvider } from "./context/data";
 
 const queryClient = new QueryClient();
 
