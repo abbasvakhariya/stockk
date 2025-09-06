@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -21,11 +22,12 @@ import {
 export default function Categories() {
   const { categories, addOrUpdateCategory, removeCategory } = useData();
   const [name, setName] = useState("");
+  const [parent, setParent] = useState<string>("");
 
   const add = () => {
     if (!name.trim()) return;
-    addOrUpdateCategory({ name: name.trim() });
-    setName("");
+    addOrUpdateCategory({ name: name.trim(), parentId: parent || undefined });
+    setName(""); setParent("");
   };
 
   return (
@@ -37,12 +39,15 @@ export default function Categories() {
           </h1>
           <p className="text-muted-foreground">Organize products by category</p>
         </div>
-        <div className="flex gap-2">
-          <Input
-            placeholder="New category"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+        <div className="flex gap-2 items-center">
+          <Input placeholder="New category" value={name} onChange={(e) => setName(e.target.value)} />
+          <Select value={parent} onValueChange={setParent}>
+            <SelectTrigger className="w-48"><SelectValue placeholder="Parent (optional)" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="">None</SelectItem>
+              {categories.map(c=> <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
+            </SelectContent>
+          </Select>
           <Button onClick={add}>Add</Button>
         </div>
       </div>
@@ -58,6 +63,7 @@ export default function Categories() {
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
+                <TableHead>Parent</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -65,12 +71,16 @@ export default function Categories() {
               {categories.map((c) => (
                 <TableRow key={c.id}>
                   <TableCell>
-                    <Input
-                      defaultValue={c.name}
-                      onBlur={(e) =>
-                        addOrUpdateCategory({ id: c.id, name: e.target.value })
-                      }
-                    />
+                    <Input defaultValue={c.name} onBlur={(e) => addOrUpdateCategory({ id: c.id, name: e.target.value })} />
+                  </TableCell>
+                  <TableCell>
+                    <Select value={c.parentId || ""} onValueChange={(v)=>addOrUpdateCategory({ id:c.id, parentId: v || null })}>
+                      <SelectTrigger className="w-48"><SelectValue placeholder="Parent" /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">None</SelectItem>
+                        {categories.filter(x=>x.id!==c.id).map(x=> <SelectItem key={x.id} value={x.id}>{x.name}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
                   </TableCell>
                   <TableCell className="text-right">
                     <Button
