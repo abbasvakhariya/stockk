@@ -83,17 +83,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const found = users.find((u) => u.email === email && u.password === password);
+    const found = users.find(
+      (u) => u.email === email && u.password === password,
+    );
     if (!found) return false;
-    const info: User = { id: found.id, name: found.name, email: found.email, role: found.role };
+    const info: User = {
+      id: found.id,
+      name: found.name,
+      email: found.email,
+      role: found.role,
+    };
     localStorage.setItem(SESSION_KEY, JSON.stringify(info));
     setUser(info);
     return true;
   };
 
   const loginAs = (role: Role) => {
-    const found = users.find((u) => u.role === role) ?? defaultUsers.find((u) => u.role === role)!;
-    const info: User = { id: found.id, name: found.name, email: found.email, role: found.role };
+    const found =
+      users.find((u) => u.role === role) ??
+      defaultUsers.find((u) => u.role === role)!;
+    const info: User = {
+      id: found.id,
+      name: found.name,
+      email: found.email,
+      role: found.role,
+    };
     localStorage.setItem(SESSION_KEY, JSON.stringify(info));
     setUser(info);
   };
@@ -122,7 +136,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const value = useMemo(
-    () => ({ user, loading, login, loginAs, logout, users, upsertUser, deleteUser }),
+    () => ({
+      user,
+      loading,
+      login,
+      loginAs,
+      logout,
+      users,
+      upsertUser,
+      deleteUser,
+    }),
     [user, loading, users],
   );
 

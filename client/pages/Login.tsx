@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useAuth } from "@/context/auth";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useLocation, Link } from "react-router-dom";
@@ -26,25 +32,50 @@ export default function Login() {
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>Sign in</CardTitle>
-          <CardDescription>Frontend-only demo auth. Use sample accounts or email/password.</CardDescription>
+          <CardDescription>
+            Frontend-only demo auth. Use sample accounts or email/password.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={onSubmit} className="space-y-3">
             <div>
-              <Input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              <Input
+                placeholder="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </div>
             <div>
-              <Input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <Input
+                placeholder="Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
             </div>
             {error && <div className="text-sm text-red-500">{error}</div>}
-            <Button type="submit" className="w-full">Login</Button>
+            <Button type="submit" className="w-full">
+              Login
+            </Button>
           </form>
           <div className="mt-4 grid grid-cols-3 gap-2 text-xs">
-            <Button variant="outline" onClick={() => loginAs("owner")}>Login as Owner</Button>
-            <Button variant="outline" onClick={() => loginAs("manager")}>Manager</Button>
-            <Button variant="outline" onClick={() => loginAs("staff")}>Staff</Button>
+            <Button variant="outline" onClick={() => loginAs("owner")}>
+              Login as Owner
+            </Button>
+            <Button variant="outline" onClick={() => loginAs("manager")}>
+              Manager
+            </Button>
+            <Button variant="outline" onClick={() => loginAs("staff")}>
+              Staff
+            </Button>
           </div>
-          <p className="mt-3 text-xs text-muted-foreground">Samples: owner@example.com/owner123, manager@example.com/manager123, staff@example.com/staff123</p>
+          <p className="mt-3 text-xs text-muted-foreground">
+            Samples: owner@example.com/owner123, manager@example.com/manager123,
+            staff@example.com/staff123
+          </p>
         </CardContent>
       </Card>
     </div>

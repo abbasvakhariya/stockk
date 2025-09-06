@@ -1,5 +1,11 @@
 import { ReactNode } from "react";
-import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import {
   SidebarProvider,
   Sidebar,
@@ -72,13 +78,21 @@ function Topbar() {
         </div>
         <div className="ml-auto flex items-center gap-3">
           <div className="hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
-            <span className="rounded-full border px-2 py-0.5">{user?.role}</span>
+            <span className="rounded-full border px-2 py-0.5">
+              {user?.role}
+            </span>
           </div>
           <Button asChild variant="outline" size="sm">
             <Link to="/sales">New Invoice</Link>
           </Button>
           {user ? (
-            <button onClick={() => { logout(); navigate("/login"); }} className="text-xs text-muted-foreground hover:text-foreground">
+            <button
+              onClick={() => {
+                logout();
+                navigate("/login");
+              }}
+              className="text-xs text-muted-foreground hover:text-foreground"
+            >
               Logout
             </button>
           ) : (
@@ -87,7 +101,12 @@ function Topbar() {
             </Button>
           )}
           <Avatar className="size-8">
-            <AvatarFallback>{(user?.name || "").split(" ").map(s=>s[0]).join("") || "AD"}</AvatarFallback>
+            <AvatarFallback>
+              {(user?.name || "")
+                .split(" ")
+                .map((s) => s[0])
+                .join("") || "AD"}
+            </AvatarFallback>
           </Avatar>
         </div>
       </div>
@@ -104,16 +123,66 @@ type NavItem = {
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { to: "/", key: "dashboard", label: "Dashboard", icon: <LayoutDashboard className="size-4" /> },
-  { to: "/products", key: "products", label: "Products", icon: <Package className="size-4" /> },
-  { to: "/categories", key: "categories", label: "Categories", icon: <Tags className="size-4" /> },
-  { to: "/suppliers", key: "suppliers", label: "Suppliers", icon: <Truck className="size-4" /> },
-  { to: "/purchases", key: "purchases", label: "Purchases", icon: <ShoppingCart className="size-4" /> },
-  { to: "/sales", key: "sales", label: "Billing", icon: <Receipt className="size-4" /> },
-  { to: "/reports", key: "reports", label: "Reports", icon: <BarChart3 className="size-4" /> },
-  { to: "/users", key: "users", label: "Users & Roles", icon: <Users2 className="size-4" /> },
-  { to: "/backup", key: "backup", label: "Backup", icon: <Database className="size-4" /> },
-  { to: "/settings", key: "settings", label: "Settings", icon: <Settings className="size-4" /> },
+  {
+    to: "/",
+    key: "dashboard",
+    label: "Dashboard",
+    icon: <LayoutDashboard className="size-4" />,
+  },
+  {
+    to: "/products",
+    key: "products",
+    label: "Products",
+    icon: <Package className="size-4" />,
+  },
+  {
+    to: "/categories",
+    key: "categories",
+    label: "Categories",
+    icon: <Tags className="size-4" />,
+  },
+  {
+    to: "/suppliers",
+    key: "suppliers",
+    label: "Suppliers",
+    icon: <Truck className="size-4" />,
+  },
+  {
+    to: "/purchases",
+    key: "purchases",
+    label: "Purchases",
+    icon: <ShoppingCart className="size-4" />,
+  },
+  {
+    to: "/sales",
+    key: "sales",
+    label: "Billing",
+    icon: <Receipt className="size-4" />,
+  },
+  {
+    to: "/reports",
+    key: "reports",
+    label: "Reports",
+    icon: <BarChart3 className="size-4" />,
+  },
+  {
+    to: "/users",
+    key: "users",
+    label: "Users & Roles",
+    icon: <Users2 className="size-4" />,
+  },
+  {
+    to: "/backup",
+    key: "backup",
+    label: "Backup",
+    icon: <Database className="size-4" />,
+  },
+  {
+    to: "/settings",
+    key: "settings",
+    label: "Settings",
+    icon: <Settings className="size-4" />,
+  },
 ];
 
 function SidebarNav() {
@@ -130,7 +199,9 @@ function SidebarNav() {
           <SidebarGroupLabel>Manage</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {NAV_ITEMS.filter((n) => !user || canAccess(n.key, user.role)).map((item) => (
+              {NAV_ITEMS.filter(
+                (n) => !user || canAccess(n.key, user.role),
+              ).map((item) => (
                 <SidebarMenuItem key={item.to}>
                   <SidebarMenuButton
                     asChild

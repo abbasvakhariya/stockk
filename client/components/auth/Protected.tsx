@@ -1,7 +1,13 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { Role, useAuth } from "@/context/auth";
 
-export default function Protected({ children, roles }: { children: React.ReactNode; roles?: Role[] }) {
+export default function Protected({
+  children,
+  roles,
+}: {
+  children: React.ReactNode;
+  roles?: Role[];
+}) {
   const { user, loading } = useAuth();
   const location = useLocation();
 
