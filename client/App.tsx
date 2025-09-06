@@ -32,92 +32,24 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route element={<AppLayout />}>
-              <Route
-                index
-                element={
-                  <Protected>
-                    <Dashboard />
-                  </Protected>
-                }
-              />
-              <Route
-                path="products"
-                element={
-                  <Protected>
-                    <Products />
-                  </Protected>
-                }
-              />
-              <Route
-                path="categories"
-                element={
-                  <Protected roles={["owner", "manager"]}>
-                    <Categories />
-                  </Protected>
-                }
-              />
-              <Route
-                path="suppliers"
-                element={
-                  <Protected roles={["owner", "manager"]}>
-                    <Suppliers />
-                  </Protected>
-                }
-              />
-              <Route
-                path="purchases"
-                element={
-                  <Protected roles={["owner", "manager"]}>
-                    <Purchases />
-                  </Protected>
-                }
-              />
-              <Route
-                path="sales"
-                element={
-                  <Protected>
-                    <Sales />
-                  </Protected>
-                }
-              />
-              <Route
-                path="reports"
-                element={
-                  <Protected roles={["owner", "manager"]}>
-                    <Reports />
-                  </Protected>
-                }
-              />
-              <Route
-                path="users"
-                element={
-                  <Protected roles={["owner", "manager"]}>
-                    <Users />
-                  </Protected>
-                }
-              />
-              <Route
-                path="backup"
-                element={
-                  <Protected roles={["owner", "manager"]}>
-                    <Backup />
-                  </Protected>
-                }
-              />
-              <Route
-                path="settings"
-                element={
-                  <Protected roles={["owner", "manager"]}>
-                    <Settings />
-                  </Protected>
-                }
-              />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <DataProvider>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route element={<AppLayout />}>
+                <Route index element={<Protected><Dashboard /></Protected>} />
+                <Route path="products" element={<Protected><Products /></Protected>} />
+                <Route path="categories" element={<Protected roles={["owner","manager"]}><Categories /></Protected>} />
+                <Route path="suppliers" element={<Protected roles={["owner","manager"]}><Suppliers /></Protected>} />
+                <Route path="purchases" element={<Protected roles={["owner","manager"]}><Purchases /></Protected>} />
+                <Route path="sales" element={<Protected><Sales /></Protected>} />
+                <Route path="reports" element={<Protected roles={["owner","manager"]}><Reports /></Protected>} />
+                <Route path="users" element={<Protected roles={["owner","manager"]}><Users /></Protected>} />
+                <Route path="backup" element={<Protected roles={["owner","manager"]}><Backup /></Protected>} />
+                <Route path="settings" element={<Protected roles={["owner","manager"]}><Settings /></Protected>} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </DataProvider>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
