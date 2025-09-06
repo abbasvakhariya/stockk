@@ -60,7 +60,10 @@ function Topbar() {
         <div className="hidden md:flex items-center gap-2 w-full max-w-xl">
           <div className="relative w-full">
             <Search className="absolute left-2 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-            <SidebarInput placeholder="Search products, suppliers, invoices..." className="pl-8" />
+            <SidebarInput
+              placeholder="Search products, suppliers, invoices..."
+              className="pl-8"
+            />
           </div>
         </div>
         <div className="ml-auto flex items-center gap-2">
@@ -88,7 +91,11 @@ const NAV_ITEMS: NavItem[] = [
   { to: "/products", label: "Products", icon: <Package className="size-4" /> },
   { to: "/categories", label: "Categories", icon: <Tags className="size-4" /> },
   { to: "/suppliers", label: "Suppliers", icon: <Truck className="size-4" /> },
-  { to: "/purchases", label: "Purchases", icon: <ShoppingCart className="size-4" /> },
+  {
+    to: "/purchases",
+    label: "Purchases",
+    icon: <ShoppingCart className="size-4" />,
+  },
   { to: "/sales", label: "Billing", icon: <Receipt className="size-4" /> },
   { to: "/reports", label: "Reports", icon: <BarChart3 className="size-4" /> },
   { to: "/users", label: "Users & Roles", icon: <Users2 className="size-4" /> },
@@ -111,7 +118,11 @@ function SidebarNav() {
             <SidebarMenu>
               {NAV_ITEMS.map((item) => (
                 <SidebarMenuItem key={item.to}>
-                  <SidebarMenuButton asChild isActive={pathname === item.to} tooltip={item.label}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathname === item.to}
+                    tooltip={item.label}
+                  >
                     <NavLink to={item.to} className="flex items-center gap-2">
                       {item.icon}
                       <span>{item.label}</span>
