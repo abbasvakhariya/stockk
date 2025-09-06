@@ -39,6 +39,8 @@ export default function Purchases() {
         productId: products[0]?.id!,
         qty: 1,
         cost: products[0]?.costPrice || 0,
+        batch: "",
+        expiry: "",
       },
     ]);
   const update = (i: number, patch: Partial<PurchaseItem>) =>
