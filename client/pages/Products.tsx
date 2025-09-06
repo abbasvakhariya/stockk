@@ -158,7 +158,10 @@ export default function Products() {
                 <Select
                   value={form.categoryId ?? "__none"}
                   onValueChange={(v) =>
-                    setForm({ ...form, categoryId: v === "__none" ? undefined : v })
+                    setForm({
+                      ...form,
+                      categoryId: v === "__none" ? undefined : v,
+                    })
                   }
                 >
                   <SelectTrigger>
@@ -176,7 +179,10 @@ export default function Products() {
                 <Select
                   value={form.supplierId ?? "__none"}
                   onValueChange={(v) =>
-                    setForm({ ...form, supplierId: v === "__none" ? undefined : v })
+                    setForm({
+                      ...form,
+                      supplierId: v === "__none" ? undefined : v,
+                    })
                   }
                 >
                   <SelectTrigger>
@@ -247,31 +253,97 @@ export default function Products() {
                       )}
                     </TableCell>
                     <TableCell className="text-right space-x-2">
-                      <Button size="sm" variant="outline" onClick={() => { setForm(p); setOpen(true); }}>Edit</Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => {
+                          setForm(p);
+                          setOpen(true);
+                        }}
+                      >
+                        Edit
+                      </Button>
                       {can.deleteProducts(useAuth().user!.role) && (
-                        <Button size="sm" variant="destructive" onClick={() => removeProduct(p.id)}>Delete</Button>
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          onClick={() => removeProduct(p.id)}
+                        >
+                          Delete
+                        </Button>
                       )}
-                      <Button size="sm" onClick={() => adjustStock({ date: new Date().toISOString(), productId: p.id, qtyChange: 1, reason: "Manual" })}>+1</Button>
-                      <Button size="sm" variant="outline" onClick={() => adjustStock({ date: new Date().toISOString(), productId: p.id, qtyChange: -1, reason: "Manual" })}>-1</Button>
+                      <Button
+                        size="sm"
+                        onClick={() =>
+                          adjustStock({
+                            date: new Date().toISOString(),
+                            productId: p.id,
+                            qtyChange: 1,
+                            reason: "Manual",
+                          })
+                        }
+                      >
+                        +1
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() =>
+                          adjustStock({
+                            date: new Date().toISOString(),
+                            productId: p.id,
+                            qtyChange: -1,
+                            reason: "Manual",
+                          })
+                        }
+                      >
+                        -1
+                      </Button>
                     </TableCell>
                     <TableCell className="text-right">
                       <Dialog>
                         <DialogTrigger asChild>
-                          <Button size="sm" variant="outline">View</Button>
+                          <Button size="sm" variant="outline">
+                            View
+                          </Button>
                         </DialogTrigger>
                         <DialogContent>
-                          <DialogHeader><DialogTitle>Barcode for {p.sku}</DialogTitle></DialogHeader>
-                          <div id={`barcode-${p.id}`} className="flex flex-col items-center">
-                            <Code39 value={p.sku || p.id} height={60} scale={2} showText />
+                          <DialogHeader>
+                            <DialogTitle>Barcode for {p.sku}</DialogTitle>
+                          </DialogHeader>
+                          <div
+                            id={`barcode-${p.id}`}
+                            className="flex flex-col items-center"
+                          >
+                            <Code39
+                              value={p.sku || p.id}
+                              height={60}
+                              scale={2}
+                              showText
+                            />
                             <div className="mt-2">
-                              <Button size="sm" onClick={() => {
-                                const el = document.querySelector(`#barcode-${p.id} svg`) as SVGSVGElement | null;
-                                if (!el) return;
-                                const svg = new XMLSerializer().serializeToString(el);
-                                const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
-                                const url = URL.createObjectURL(blob);
-                                const a = document.createElement('a'); a.href = url; a.download = `${p.sku||p.id}.svg`; a.click(); URL.revokeObjectURL(url);
-                              }}>Download SVG</Button>
+                              <Button
+                                size="sm"
+                                onClick={() => {
+                                  const el = document.querySelector(
+                                    `#barcode-${p.id} svg`,
+                                  ) as SVGSVGElement | null;
+                                  if (!el) return;
+                                  const svg =
+                                    new XMLSerializer().serializeToString(el);
+                                  const blob = new Blob([svg], {
+                                    type: "image/svg+xml;charset=utf-8",
+                                  });
+                                  const url = URL.createObjectURL(blob);
+                                  const a = document.createElement("a");
+                                  a.href = url;
+                                  a.download = `${p.sku || p.id}.svg`;
+                                  a.click();
+                                  URL.revokeObjectURL(url);
+                                }}
+                              >
+                                Download SVG
+                              </Button>
                             </div>
                           </div>
                         </DialogContent>

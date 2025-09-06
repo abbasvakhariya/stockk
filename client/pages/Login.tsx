@@ -13,7 +13,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 
 export default function Login() {
   const { login, register, loginAs } = useAuth();
-  const [mode, setMode] = useState<'login'|'signup'>('login');
+  const [mode, setMode] = useState<"login" | "signup">("login");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,12 +25,20 @@ export default function Login() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     let ok = false;
-    if (mode==='login') ok = await login(email.trim(), password);
-    else ok = await register(name.trim(), email.trim(), password, 'staff');
-    if (!ok) return setError(mode==='login'?"Invalid credentials":"Email already exists");
-    const sess = JSON.parse(localStorage.getItem('sf_session')||'{}');
-    const role = sess.role || 'staff';
-    const next = role==='owner'?'/owner/dashboard': role==='manager'?'/manager/dashboard':'/staff/dashboard';
+    if (mode === "login") ok = await login(email.trim(), password);
+    else ok = await register(name.trim(), email.trim(), password, "staff");
+    if (!ok)
+      return setError(
+        mode === "login" ? "Invalid credentials" : "Email already exists",
+      );
+    const sess = JSON.parse(localStorage.getItem("sf_session") || "{}");
+    const role = sess.role || "staff";
+    const next =
+      role === "owner"
+        ? "/owner/dashboard"
+        : role === "manager"
+          ? "/manager/dashboard"
+          : "/staff/dashboard";
     navigate(next, { replace: true });
   };
 
@@ -38,20 +46,36 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-background">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>{mode==='login'?'Sign in':'Create account'}</CardTitle>
+          <CardTitle>
+            {mode === "login" ? "Sign in" : "Create account"}
+          </CardTitle>
           <CardDescription>
-            Frontend-only demo auth. {mode==='login'?'Use sample accounts or email/password.':'New users default to Staff role.'}
+            Frontend-only demo auth.{" "}
+            {mode === "login"
+              ? "Use sample accounts or email/password."
+              : "New users default to Staff role."}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={onSubmit} className="space-y-3">
-            {mode==='signup' && (
+            {mode === "signup" && (
               <div>
-                <Input placeholder="Full name" value={name} onChange={(e)=>setName(e.target.value)} required />
+                <Input
+                  placeholder="Full name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
               </div>
             )}
             <div>
-              <Input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              <Input
+                placeholder="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </div>
             <div>
               <Input
@@ -64,12 +88,18 @@ export default function Login() {
             </div>
             {error && <div className="text-sm text-red-500">{error}</div>}
             <Button type="submit" className="w-full">
-              {mode==='login'?'Login':'Sign up'}
+              {mode === "login" ? "Login" : "Sign up"}
             </Button>
           </form>
           <div className="flex justify-between mt-2 text-xs">
-            <button className="underline text-muted-foreground" onClick={()=>{ setMode(mode==='login'?'signup':'login'); setError(null); }}>
-              {mode==='login'?"Create account":"Have an account? Sign in"}
+            <button
+              className="underline text-muted-foreground"
+              onClick={() => {
+                setMode(mode === "login" ? "signup" : "login");
+                setError(null);
+              }}
+            >
+              {mode === "login" ? "Create account" : "Have an account? Sign in"}
             </button>
           </div>
           <div className="mt-4 grid grid-cols-3 gap-2 text-xs">

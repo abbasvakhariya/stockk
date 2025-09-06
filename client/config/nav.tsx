@@ -1,7 +1,21 @@
-import { PieChart, Users, Boxes, Truck, PackagePlus, BarChart, Settings, Receipt, FileText } from "lucide-react";
+import {
+  PieChart,
+  Users,
+  Boxes,
+  Truck,
+  PackagePlus,
+  BarChart,
+  Settings,
+  Receipt,
+  FileText,
+} from "lucide-react";
 import type { Role } from "@/context/auth";
 
-export type NavItem = { label: string; to: string; icon: React.ComponentType<any> };
+export type NavItem = {
+  label: string;
+  to: string;
+  icon: React.ComponentType<any>;
+};
 export const NAV_CONFIG: Record<Uppercase<Role>, NavItem[]> = {
   OWNER: [
     { label: "Dashboard", to: "/owner/dashboard", icon: PieChart },
