@@ -84,16 +84,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const found = users.find(
-      (u) => u.email === email && u.password === password,
-    );
+    const found = users.find((u) => u.email === email && u.password === password);
     if (!found) return false;
-    const info: User = {
-      id: found.id,
-      name: found.name,
-      email: found.email,
-      role: found.role,
-    };
+    const info: User = { id: found.id, name: found.name, email: found.email, role: found.role };
+    localStorage.setItem(SESSION_KEY, JSON.stringify(info));
+    setUser(info);
+    return true;
+  };
+
+  const register: AuthContextType["register"] = async (name, email, password, role = "staff") => {
+    const exists = users.some((u) => u.email === email);
+    if (exists) return false;
+    const newUser: UserWithPassword = { id: crypto.randomUUID(), name, email, password, role };
+    setUsers((prev) => [newUser, ...prev]);
+    const info: User = { id: newUser.id, name, email, role };
     localStorage.setItem(SESSION_KEY, JSON.stringify(info));
     setUser(info);
     return true;
@@ -141,6 +145,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       user,
       loading,
       login,
+      register,
       loginAs,
       logout,
       users,
