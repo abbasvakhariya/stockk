@@ -44,7 +44,7 @@ export default function Categories() {
           <Select value={parent} onValueChange={setParent}>
             <SelectTrigger className="w-48"><SelectValue placeholder="Parent (optional)" /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="">None</SelectItem>
+              <SelectItem value="__none">None</SelectItem>
               {categories.map(c=> <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
             </SelectContent>
           </Select>
