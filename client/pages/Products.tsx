@@ -132,6 +132,7 @@ export default function Products() {
                   onChange={(e) =>
                     setForm({ ...form, costPrice: parseFloat(e.target.value) })
                   }
+                  disabled={!can.editProductPrices(useAuth().user!.role)}
                 />
                 <Input
                   type="number"
@@ -141,6 +142,7 @@ export default function Products() {
                   onChange={(e) =>
                     setForm({ ...form, sellPrice: parseFloat(e.target.value) })
                   }
+                  disabled={!can.editProductPrices(useAuth().user!.role)}
                 />
                 <Input
                   type="number"
