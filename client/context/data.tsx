@@ -22,7 +22,7 @@ export type Supplier = {
   email?: string;
   address?: string;
 };
-export type PurchaseItem = { productId: ID; qty: number; cost: number };
+export type PurchaseItem = { productId: ID; qty: number; cost: number; batch?: string; expiry?: string };
 export type Purchase = {
   id: ID;
   date: string;
