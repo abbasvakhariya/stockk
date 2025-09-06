@@ -18,6 +18,9 @@ import Reports from "./pages/Reports";
 import Users from "./pages/Users";
 import Backup from "./pages/Backup";
 import Settings from "./pages/Settings";
+import Login from "./pages/Login";
+import { AuthProvider } from "./context/auth";
+import Protected from "./components/auth/Protected";
 
 const queryClient = new QueryClient();
 
@@ -27,21 +30,24 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route element={<AppLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="products" element={<Products />} />
-            <Route path="categories" element={<Categories />} />
-            <Route path="suppliers" element={<Suppliers />} />
-            <Route path="purchases" element={<Purchases />} />
-            <Route path="sales" element={<Sales />} />
-            <Route path="reports" element={<Reports />} />
-            <Route path="users" element={<Users />} />
-            <Route path="backup" element={<Backup />} />
-            <Route path="settings" element={<Settings />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route element={<AppLayout />}>
+              <Route index element={<Protected><Dashboard /></Protected>} />
+              <Route path="products" element={<Protected><Products /></Protected>} />
+              <Route path="categories" element={<Protected roles={["owner","manager"]}><Categories /></Protected>} />
+              <Route path="suppliers" element={<Protected roles={["owner","manager"]}><Suppliers /></Protected>} />
+              <Route path="purchases" element={<Protected roles={["owner","manager"]}><Purchases /></Protected>} />
+              <Route path="sales" element={<Protected><Sales /></Protected>} />
+              <Route path="reports" element={<Protected roles={["owner","manager"]}><Reports /></Protected>} />
+              <Route path="users" element={<Protected roles={["owner","manager"]}><Users /></Protected>} />
+              <Route path="backup" element={<Protected roles={["owner","manager"]}><Backup /></Protected>} />
+              <Route path="settings" element={<Protected roles={["owner","manager"]}><Settings /></Protected>} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
