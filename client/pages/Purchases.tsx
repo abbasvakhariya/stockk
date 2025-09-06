@@ -97,6 +97,8 @@ export default function Purchases() {
                 <TableHead>Product</TableHead>
                 <TableHead className="text-right">Qty</TableHead>
                 <TableHead className="text-right">Cost</TableHead>
+                <TableHead>Batch</TableHead>
+                <TableHead>Expiry</TableHead>
                 <TableHead className="text-right">Line Total</TableHead>
                 <TableHead></TableHead>
               </TableRow>
